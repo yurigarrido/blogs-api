@@ -2,9 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
-const { validateDisplayName, validateEmailName } = require('../middlewares/createUser');
+const { 
+  validateDisplayName, 
+  validateEmailName, 
+  validatePassword } = require('../middlewares/createUser');
 
-router.post('/', validateDisplayName, validateEmailName, (req, res) => {
+router.post('/', validateDisplayName, validateEmailName, validatePassword, (req, res) => {
   // console.log(req.body);
   res.status(200);
 });
