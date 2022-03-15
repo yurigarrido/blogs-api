@@ -8,6 +8,7 @@ const {
   validateEmailName, 
   validatePassword } = require('../middlewares/createUser');
 
+// create
 router.post('/', validateDisplayName, validateEmailName, validatePassword, create);
 
 module.exports = router;
