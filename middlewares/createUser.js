@@ -7,7 +7,7 @@ const validateDisplayName = async (req, res, next) => {
   }
 
   if (displayName.length < 8) {
-    return res.status(422).json({ 
+    return res.status(400).json({ 
       message: '"displayName" length must be at least 8 characters long', 
     });
   }
@@ -22,7 +22,7 @@ const validateEmailName = async (req, res, next) => {
   const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
   const emailIsValid = regex.test(email);
 
-  if (!emailIsValid) return res.status(400).json({ message: '"email" need be a valid address' });
+  if (!emailIsValid) return res.status(400).json({ message: '"email" must be a valid email' });
 
   const emailAlreadyRegistered = await User.findOne({ where: { email } });
 
@@ -38,8 +38,8 @@ const validatePassword = async (req, res, next) => {
   }
 
   if (password.length < 6) {
-    return res.status(422).json({ 
-      message: '"password" length must be at least 6 characters long', 
+    return res.status(400).json({ 
+      message: '"password" length must be 6 characters long', 
     });
   }
 

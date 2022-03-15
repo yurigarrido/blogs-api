@@ -2,14 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
+const { create } = require('../controllers/createUser');
 const { 
   validateDisplayName, 
   validateEmailName, 
   validatePassword } = require('../middlewares/createUser');
 
-router.post('/', validateDisplayName, validateEmailName, validatePassword, (req, res) => {
-  // console.log(req.body);
-  res.status(200);
-});
+router.post('/', validateDisplayName, validateEmailName, validatePassword, create);
 
 module.exports = router;
