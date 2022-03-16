@@ -1,51 +1,44 @@
 'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const BlogPosts = queryInterface.createTable(
-      'BlogPosts',
-      {
-        id: {
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-          type: Sequelize.INTEGER,
-        },
-        title: {
-          allowNull: false,
-          type: Sequelize.STRING,
-        },
-        content: {
-          allowNull: false,
-          type: Sequelize.STRING,
-        },
-        userId: {
-          allowNull: false,
-          type: Sequelize.INTEGER,
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-          references: {
-            model: 'Users',
-            key: 'id',
-          }
-        },
-        published: {
-          defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-          allowNull: false,
-          type: Sequelize.DATE,
-        },
-        updated: {
-          defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-          allowNull: false,
-          type: Sequelize.DATE,
-        },
+    await queryInterface.createTable('BlogPosts', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
       },
-    );
-
-    return BlogPosts;
+      title: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      content: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      published: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
+      },
+      updated: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
+      },
+    });
   },
-
-  down: async (queryInterface, Sequelize) => (
-    queryInterface.dropTable('BlogPosts')
-  ),
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('BlogPosts');
+  },
 };
