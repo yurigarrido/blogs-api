@@ -32,7 +32,6 @@ const validateCategoryIds = async (req, res, next) => {
   }));
 
   if (hasCategories.some((category) => category === false)) {
-    console.log(hasCategories);
     return res.status(400).json({ message: '"categoryIds" not found' });
   }
   
